@@ -1,8 +1,11 @@
 import axios from 'axios';
+import ReduxStore from '../utils/store';
 import BaseAPIService from './BaseAPISerice';
 
 export default class AuthAPIService extends BaseAPIService {
-  public static async login(loginPayload: UserLoginPayload) {
+  public static async login(
+    loginPayload: UserLoginPayload
+  ): Promise<{ type: UserType }> {
     return new Promise(async (resolve, reject) => {
       const url = `${this.baseUrl}/auth`;
       try {
@@ -21,12 +24,15 @@ export default class AuthAPIService extends BaseAPIService {
   public static async handleSuccessfulAuthentication({
     data
   }: DataResponse<UserLoginResponse>) {
-    const { token, _id } = data;
+    const { token, ...user } = data;
     localStorage.setItem('token', token);
-    localStorage.setItem('_id', _id);
-    axios.defaults.headers.common.Authorization = `Bearer ${token}`;
 
-    // Dispatch redux action here
+    ReduxStore.dispatch({
+      user,
+      type: 'AUTHENTICATED'
+    });
+
+    return { type: user.type };
   }
 
   public static async getEmployeeById(id: string) {
@@ -44,7 +50,9 @@ export default class AuthAPIService extends BaseAPIService {
     });
   }
 
-  public static async getCustomerById(id: string) {
+  public static async getCustomerById(
+    id: string
+  ): Promise<DataResponse<GetCustomerResponse>> {
     return new Promise(async (resolve, reject) => {
       try {
         const { data } = await axios.get<DataResponse<GetCustomerResponse>>(

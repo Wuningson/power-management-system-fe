@@ -25,7 +25,9 @@ export default class BillAPIService {
     });
   }
 
-  public static async fetchBills(customerId: string) {
+  public static async fetchBills(
+    customerId: string
+  ): Promise<DataResponse<Bill[]>> {
     return new Promise(async (resolve, reject) => {
       try {
         const { data } = await axios.get<DataResponse<Bill[]>>(

@@ -8,7 +8,9 @@ export default class PaymentAPIService {
     }
   };
 
-  public static async generatePaymentUrl(payload: PaymentPayload) {
+  public static async generatePaymentUrl(
+    payload: PaymentPayload
+  ): Promise<DataResponse<string>> {
     return new Promise(async (resolve, reject) => {
       try {
         const { data } = await axios.post<DataResponse<string>>(
@@ -25,10 +27,12 @@ export default class PaymentAPIService {
     });
   }
 
-  public static async fetchPayments(customerId: string) {
+  public static async fetchPayments(
+    customerId: string
+  ): Promise<DataResponse<Payment[]>> {
     return new Promise(async (resolve, reject) => {
       try {
-        const { data } = await axios.get<DataResponse<Payment>>(
+        const { data } = await axios.get<DataResponse<Payment[]>>(
           `${this.baseUrl}/payment?customerId=${customerId}`,
           this.config
         );

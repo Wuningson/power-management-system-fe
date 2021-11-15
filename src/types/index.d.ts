@@ -12,13 +12,12 @@ interface NoDataResponse {
 
 interface Customer {
   _id: string;
-  email?: string;
+  email: string;
   address: string;
-  createdAt: Date;
+  createdAt: string;
   meterNo: number;
   lastName: string;
   firstName: string;
-  password?: string;
   accountNo: string;
   middleName?: string;
   type: 'customer';
@@ -27,19 +26,20 @@ interface Customer {
 
 interface Employee {
   _id: string;
-  createdAt: Date;
+  createdAt: string;
   lastName: string;
   createdBy: Admin;
   firstName: string;
   password?: string;
   type: 'employee';
   employeeId: string;
+  email: string;
 }
 
 interface Admin {
   _id: string;
   adminId: string;
-  createdAt: Date;
+  createdAt: string;
   lastName: string;
   firstName: string;
   type: 'admin';
@@ -51,11 +51,11 @@ interface UserLoginPayload {
   password: string;
 }
 
-type User = Admin | Customer | Employee;
+type User = Customer | Employee;
 
-type UserLoginResponse = (Admin | Customer | Employee) & { token: string };
+type UserLoginResponse = User & { token: string };
 
-type UserType = 'admin' | 'employee' | 'customer';
+type UserType = 'employee' | 'customer';
 
 interface GetCustomerResponse extends Customer {
   totalBill: number;
@@ -108,6 +108,7 @@ interface Payment {
 }
 
 interface AddCustomerPayload {
+  email: string;
   address: string;
   meterNo: number;
   lastName: string;
@@ -115,4 +116,9 @@ interface AddCustomerPayload {
   firstName: string;
   accountNo: string;
   middleName: string;
+}
+
+interface LoginFormValues {
+  userId: string;
+  password: string;
 }

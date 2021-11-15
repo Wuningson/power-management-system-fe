@@ -13,10 +13,6 @@ class AuthActionsCreator {
   }
 
   static unAuthenticate() {
-    localStorage.removeItem('userId');
-    localStorage.removeItem('token');
-    localStorage.removeItem('type');
-
     this.dispatch({
       type: types.UNAUTHENTICATED
     });

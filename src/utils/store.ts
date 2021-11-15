@@ -8,4 +8,6 @@ const store = createStore(
   composeWithDevTools(applyMiddleware(ReduxThunk))
 );
 
+export type RootState = ReturnType<typeof store.getState>;
+
 export default store;
