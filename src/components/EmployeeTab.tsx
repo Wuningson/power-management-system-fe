@@ -20,13 +20,13 @@ const EmployeeTab: React.FC<EmployeeTabProps> = (props) => {
 
   return (
     <Box>
-      {/* <Text fill='grey' onClick={handleBack}>
+      <Text fill='grey' onClick={handleBack}>
         Back
-      </Text> */}
-      {/* <Flex justifyContent='space-between'>
+      </Text>
+      <Flex justifyContent='space-between'>
         <Box onClick={handleChange('bill')}>Bills</Box>
         <Box onClick={handleChange('payment')}>Payments</Box>
-      </Flex> */}
+      </Flex>
       {tab === 'bill' ? <Bill {...props} /> : <Payment {...props} />}
     </Box>
   );

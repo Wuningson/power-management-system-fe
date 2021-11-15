@@ -1,4 +1,3 @@
-import NavBar from './NavBar';
 import BillTable from './BillTable';
 import { Text } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
@@ -9,15 +8,15 @@ type BillProps = RouteComponentProps<{ userId: string }>;
 
 const Bill: React.FC<BillProps> = ({ match }) => {
   const [bills, setBills] = useState<Bill[]>([]);
-  // useEffect(() => {
-  //   const userId = match.params.userId;
-  //   async function getData() {
-  //     const data = await BillAPIService.fetchBills(userId);
-  //     console.log({ data: data.data });
-  //     setBills(data.data);
-  //   }
-  //   getData();
-  // }, [match.params.userId]);
+  useEffect(() => {
+    const userId = match.params.userId;
+    async function getData() {
+      const data = await BillAPIService.fetchBills(userId);
+      console.log({ data: data.data });
+      setBills(data.data);
+    }
+    getData();
+  }, [match.params.userId]);
 
   const history = useHistory();
   const handleBack = () => {

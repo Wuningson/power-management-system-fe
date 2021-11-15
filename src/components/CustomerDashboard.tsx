@@ -1,5 +1,4 @@
 import React from 'react';
-import NavBar from './NavBar';
 import { Box } from '@chakra-ui/react';
 
 const CustomerDashboard: React.FC = () => {

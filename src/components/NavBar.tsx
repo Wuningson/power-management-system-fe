@@ -1,11 +1,11 @@
 import Utils from '../utils/Utils';
 import React, { Fragment } from 'react';
+import { Link } from '@chakra-ui/react';
 import { GrLogout } from 'react-icons/gr';
 import { useSelector } from 'react-redux';
-import ReduxStore, { RootState } from '../utils/store';
 import { Link as RLink } from 'react-router-dom';
-import { Box, Button, Text, Flex } from '@chakra-ui/react';
-import { Link } from '@chakra-ui/react';
+import { Button, Text, Flex } from '@chakra-ui/react';
+import ReduxStore, { RootState } from '../utils/store';
 
 const NavBar: React.FC = () => {
   const { firstName, lastName, type, _id } = useSelector(
@@ -47,12 +47,14 @@ const NavBar: React.FC = () => {
           </Link>
         </Fragment>
       ) : null}
-      <Flex alignItems='center'>
-        <Text mr={3}>{fullName}</Text>
-        <Button onClick={logout} rightIcon={<GrLogout />}>
-          Log out
-        </Button>
-      </Flex>
+      {type && (
+        <Flex alignItems='center'>
+          <Text mr={3}>{fullName}</Text>
+          <Button onClick={logout} rightIcon={<GrLogout />}>
+            Log out
+          </Button>
+        </Flex>
+      )}
     </Flex>
   );
 };

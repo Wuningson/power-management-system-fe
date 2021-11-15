@@ -16,7 +16,7 @@ const Customer: React.FC = () => {
       setCustomers(data.data);
     }
     getData();
-  });
+  }, []);
 
   const handleClick = (userId: string) => (e: any) => {
     history.push(`/employee/tab/${userId}`);
