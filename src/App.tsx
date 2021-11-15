@@ -25,8 +25,8 @@ const App: React.FC = () => {
   }
   return (
     <div className='App'>
-      <NavBar />
       <BrowserRouter>
+        <NavBar />
         <Switch>
           <Route exact path='/signin' component={Login} />
           <PrivateRoute path='/home' component={HomePage} />

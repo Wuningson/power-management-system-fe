@@ -1,6 +1,7 @@
 import { CustomerCardProps } from '../components/CustomerCard';
 
 export const employee: Employee = {
+  email: 'fask;@aflj.com',
   _id: 'employee',
   firstName: 'Employee',
   lastName: 'Nice nice',
@@ -18,6 +19,7 @@ export const employee: Employee = {
 };
 
 export const customer: Customer = {
+  email: 'john@gmail.com',
   _id: 'customer',
   address: 'faiow',
   createdAt: '2021-11-13T22:51:34.675Z',
@@ -39,6 +41,7 @@ export const customer: Customer = {
       type: 'admin'
     },
     employeeId: 'empid',
+    email: 'fjdksapi@hkfjsa.com',
     type: 'employee'
   },
   type: 'customer'
@@ -73,11 +76,13 @@ export const bill: Bill = {
       createdAt: '2021-11-13T22:51:34.675Z',
       type: 'admin'
     },
+    email: 'fjdksapi@hkfjsa.com',
     employeeId: 'empid',
     type: 'employee'
   },
   customerId: {
     _id: 'customer',
+    email: 'john@gmail.com',
     address: 'faiow',
     createdAt: '2021-11-13T22:51:34.675Z',
     meterNo: 12783,
@@ -98,7 +103,8 @@ export const bill: Bill = {
         type: 'admin'
       },
       employeeId: 'empid',
-      type: 'employee'
+      type: 'employee',
+      email: 'fjdksapi@hkfjsa.com'
     },
     type: 'customer'
   }
