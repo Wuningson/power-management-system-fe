@@ -27,9 +27,7 @@ const Bill: React.FC<BillProps> = ({ match }) => {
 
   return (
       <Dash_Layout title="Bills">
-      <Text fill='grey' onClick={handleBack}>
-        Back
-      </Text>
+
       <BillTable bills={bills} />
     </Dash_Layout>
   );

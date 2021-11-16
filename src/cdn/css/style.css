@@ -43,4 +43,9 @@
   color: #120c4b !important;
 }
 
+hr.fancy {
+  border: none;
+  border-top: 1px solid #f5f3fe !important;
+}
+
 /*# sourceMappingURL=style.css.map */

@@ -113,15 +113,19 @@ const BillTable: React.FC<BillTableProps> = ({ bills }) => {
 
   return (
     <div>
+        <div className="bg-purple_transparent p-2 border_radius mb-3">
       <Box width='30em'>
-        <Input
+
+          <Input
           id='search'
           value={search}
           {...register('search')}
           onChange={handleChange}
           placeholder='Search'
+          className="bg-white"
         />
       </Box>
+        </div>
       <Table {...getTableProps()}>
         <Thead>
           {headerGroups.map((headerGroup) => (
@@ -133,7 +137,9 @@ const BillTable: React.FC<BillTableProps> = ({ bills }) => {
           ))}
         </Thead>
         <Tbody {...getTableBodyProps()}>
-          {rows.map((row) => {
+          {
+              rows.length >= 1 ? (
+              rows.map((row) => {
             prepareRow(row);
             return (
               <Tr {...row.getRowProps()}>
@@ -142,7 +148,16 @@ const BillTable: React.FC<BillTableProps> = ({ bills }) => {
                 ))}
               </Tr>
             );
-          })}
+          })
+              ):(
+                  <Tr>
+                      <Td colspan={12} className="text-center padding_50">
+                          <h4 className="text-danger font-sm-4 mb-2 font-weight-700">No Record Found</h4>
+                          <p className="lead font-gray">There are no bills at this moment. Check back again later</p>
+                      </Td>
+                  </Tr>
+              )
+          }
         </Tbody>
       </Table>
     </div>

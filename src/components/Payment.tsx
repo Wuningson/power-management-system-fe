@@ -29,10 +29,8 @@ const Payment: React.FC<PaymentProps> = ({ match }) => {
 
   return (
       <Dash_Layout title="Payments">
-      <Text fill='grey' onClick={handleBack}>
-        Back
-      </Text>
-      {type === 'customer' && <Button>Make Payment</Button>}
+
+
       <PaymentTable payments={payments} />
     </Dash_Layout>
   );

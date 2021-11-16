@@ -6,6 +6,7 @@ import ReduxStore, {RootState} from "../utils/store";
 import {useSelector} from "react-redux";
 import Utils from "../utils/Utils";
 import {AttachmentIcon, CopyIcon, InfoIcon} from "@chakra-ui/icons";
+import {useHistory} from "react-router-dom";
 
 interface Props {
     children: React.ReactNode,
@@ -25,6 +26,11 @@ export default function Dash_Layout(props:Props)
         ReduxStore.dispatch({
             type: 'UNAUTHENTICATED'
         });
+    };
+
+    const history = useHistory();
+    const handleBack = () => {
+        history.goBack();
     };
 
     return(
@@ -52,6 +58,15 @@ export default function Dash_Layout(props:Props)
                 </div>
                 <div className="col-lg-10">
                     <div className="main_area">
+
+                        <div className="border_bottom pb-3 mb-3">
+                            {
+                                props.title !== 'Dashboard' ? (
+                            <Button className="float-end" onClick={handleBack}>Back</Button>
+                                ):null
+                            }
+                        <h1 className="font-lg-3 text-primary text-capitalize font-weight-700">{props.title}</h1>
+                        </div>
                         {props.children}
                     </div>
                 </div>
