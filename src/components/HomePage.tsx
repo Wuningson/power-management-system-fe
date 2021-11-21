@@ -1,11 +1,15 @@
 import React from 'react';
-import { Text } from '@chakra-ui/react';
+import { useSelector } from 'react-redux';
+import { RootState } from '../utils/store';
+import { Redirect } from 'react-router-dom';
 
 const HomePage: React.FC = () => {
-  return (
-    <>
-      <Text>Welcome</Text>
-    </>
+  const { type } = useSelector((state: RootState) => state.auth);
+
+  return type === 'customer' ? (
+    <Redirect to={`/customer`} />
+  ) : (
+    <Redirect to='/employee' />
   );
 };
 

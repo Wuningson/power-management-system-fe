@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { RootState } from '../utils/store';
 import { Route, Redirect, RouteProps } from 'react-router-dom';
+import { RootState } from '../utils/store';
 
 // @ts-ignore
 const PrivateRoute: React.FC<RouteProps> = (props) => {

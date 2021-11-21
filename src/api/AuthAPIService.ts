@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { EditCustomerState } from '../components/EditCustomer';
 import ReduxStore from '../utils/store';
 import BaseAPIService from './BaseAPISerice';
 
@@ -57,6 +58,25 @@ export default class AuthAPIService extends BaseAPIService {
       try {
         const { data } = await axios.get<DataResponse<GetCustomerResponse>>(
           `${this.baseUrl}/customer/${id}`,
+          this.config
+        );
+        resolve(data);
+      } catch (err) {
+        console.log(err);
+        reject(err);
+      }
+    });
+  }
+
+  public static async updateCustomerById(
+    id: string,
+    payload: EditCustomerState
+  ): Promise<DataResponse<UserLoginResponse>> {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const { data } = await axios.post<DataResponse<UserLoginResponse>>(
+          `${this.baseUrl}/customer/${id}`,
+          payload,
           this.config
         );
         resolve(data);

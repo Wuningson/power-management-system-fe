@@ -1,10 +1,7 @@
 import PaymentTable from './PaymentTable';
-import { useSelector } from 'react-redux';
-import { RootState } from '../utils/store';
-import { Text, Button } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
+import { RouteComponentProps } from 'react-router-dom';
 import PaymentAPIService from '../api/PaymentAPIService';
-import { RouteComponentProps, useHistory } from 'react-router-dom';
 
 type PaymentProps = RouteComponentProps<{ userId: string }>;
 
@@ -19,21 +16,10 @@ const Payment: React.FC<PaymentProps> = ({ match }) => {
     getData();
   }, [match.params.userId]);
 
-  const history = useHistory();
-  const handleBack = () => {
-    history.goBack();
-  };
-
-  const { type } = useSelector((state: RootState) => state.auth);
-
   return (
-    <div>
-      <Text fill='grey' onClick={handleBack}>
-        Back
-      </Text>
-      {type === 'customer' && <Button>Make Payment</Button>}
+    <>
       <PaymentTable payments={payments} />
-    </div>
+    </>
   );
 };
 

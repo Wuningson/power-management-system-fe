@@ -1,7 +1,20 @@
 import { useTable } from 'react-table';
 import { useForm } from 'react-hook-form';
 import React, { useState, useMemo } from 'react';
-import { Table, Thead, Tbody, Tr, Th, Td, Input, Box } from '@chakra-ui/react';
+import {
+  Table,
+  Thead,
+  Tbody,
+  Tr,
+  Th,
+  Td,
+  Input,
+  Box,
+  Button
+} from '@chakra-ui/react';
+import { useSelector } from 'react-redux';
+import { RootState } from '../utils/store';
+import { useHistory } from 'react-router-dom';
 
 interface PaymentTableProps {
   payments: Payment[];
@@ -78,21 +91,39 @@ const PaymentTable: React.FC<PaymentTableProps> = ({ payments }) => {
     []
   );
 
+  const history = useHistory();
+  const makePayment = (e: any) => {
+    history.push('/payments/customer');
+  };
+
+  const { type } = useSelector((state: RootState) => state.auth);
+
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
     // @ts-ignore
     useTable({ columns, data });
 
   return (
     <div>
-      <Box width='30em'>
-        <Input
-          id='search'
-          value={search}
-          {...register('search')}
-          onChange={handleChange}
-          placeholder='Search'
-        />
-      </Box>
+      <div className='bg-purple_transparent p-2 border_radius mb-3'>
+        {type === 'customer' && (
+          <Button
+            className='float-end bg-primary font-white'
+            onClick={makePayment}
+          >
+            Make Payment
+          </Button>
+        )}
+        <Box width='30em'>
+          <Input
+            id='search'
+            value={search}
+            {...register('search')}
+            onChange={handleChange}
+            placeholder='Search'
+            className='bg-white'
+          />
+        </Box>
+      </div>
       <Table {...getTableProps()}>
         <Thead>
           {headerGroups.map((headerGroup) => (
@@ -104,16 +135,30 @@ const PaymentTable: React.FC<PaymentTableProps> = ({ payments }) => {
           ))}
         </Thead>
         <Tbody {...getTableBodyProps()}>
-          {rows.map((row) => {
-            prepareRow(row);
-            return (
-              <Tr {...row.getRowProps()}>
-                {row.cells.map((cell) => (
-                  <Td {...cell.getCellProps()}>{cell.render('Cell')}</Td>
-                ))}
-              </Tr>
-            );
-          })}
+          {rows.length >= 1 ? (
+            rows.map((row) => {
+              prepareRow(row);
+              return (
+                <Tr {...row.getRowProps()}>
+                  {row.cells.map((cell) => (
+                    <Td {...cell.getCellProps()}>{cell.render('Cell')}</Td>
+                  ))}
+                </Tr>
+              );
+            })
+          ) : (
+            <Tr>
+              <Td colspan={12} className='text-center padding_50'>
+                <h4 className='text-danger font-sm-4 mb-2 font-weight-700'>
+                  No Record Found
+                </h4>
+                <p className='lead font-gray'>
+                  There are no payment records at this moment. Check back again
+                  later
+                </p>
+              </Td>
+            </Tr>
+          )}
         </Tbody>
       </Table>
     </div>

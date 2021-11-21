@@ -1,8 +1,7 @@
 import BillTable from './BillTable';
-import { Text } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
 import BillAPIService from '../api/BillAPIService';
-import { RouteComponentProps, useHistory } from 'react-router-dom';
+import { RouteComponentProps } from 'react-router-dom';
 
 type BillProps = RouteComponentProps<{ userId: string }>;
 
@@ -18,18 +17,10 @@ const Bill: React.FC<BillProps> = ({ match }) => {
     getData();
   }, [match.params.userId]);
 
-  const history = useHistory();
-  const handleBack = () => {
-    history.goBack();
-  };
-
   return (
-    <div>
-      <Text fill='grey' onClick={handleBack}>
-        Back
-      </Text>
+    <>
       <BillTable bills={bills} />
-    </div>
+    </>
   );
 };
 

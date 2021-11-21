@@ -2,9 +2,9 @@ import CustomerCard from './CustomerCard';
 import { useSelector } from 'react-redux';
 import { RootState } from '../utils/store';
 import { useHistory } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
 import { Box, Button, Flex } from '@chakra-ui/react';
 import CustomerAPIService from '../api/CustomerAPIService';
-import React, { Fragment, useEffect, useState } from 'react';
 
 const Customer: React.FC = () => {
   const history = useHistory();
@@ -22,10 +22,6 @@ const Customer: React.FC = () => {
     history.push(`/employee/tab/${userId}`);
   };
 
-  const handleBack = () => {
-    history.goBack();
-  };
-
   const handleNewCustomer = () => {
     history.push('/customer/create');
   };
@@ -33,11 +29,8 @@ const Customer: React.FC = () => {
   const { type } = useSelector((state: RootState) => state.auth);
 
   return (
-    <Fragment>
-      <Flex justifyContent='space-between'>
-        <Button fill='grey' onClick={handleBack}>
-          Back
-        </Button>
+    <>
+      <Flex justifyContent='space-between' marginBottom='2em'>
         {type === 'employee' && (
           <Button onClick={handleNewCustomer}>Add New Customer</Button>
         )}
@@ -47,7 +40,7 @@ const Customer: React.FC = () => {
           <CustomerCard {...customer} cardType='employee' key={idx} />
         </Box>
       ))}
-    </Fragment>
+    </>
   );
 };
 
