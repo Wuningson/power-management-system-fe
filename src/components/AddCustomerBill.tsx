@@ -81,7 +81,7 @@ const AddCustomerBill: React.FC<{ userId: string }> = ({ userId }) => {
             ))}
           </Select>
         </Box>
-        <Button colorScheme='blue' type='submit' disabled={loading}>
+        <Button colorScheme='#120c4b' type='submit' disabled={loading}>
           {loading ? (
             'Create New Customer'
           ) : (

@@ -13,6 +13,7 @@ import {
 } from '@chakra-ui/react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../utils/store';
+import LoadingActionsCreator from '../actions/LoadingActionsCreator';
 
 const CreateCustomer: React.FC = () => {
   const loading = useSelector((state: RootState) => state.loading);
@@ -42,8 +43,10 @@ const CreateCustomer: React.FC = () => {
 
   const handleSubmit = async (e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const res = await CustomerAPIService.addNewCustomer(form);
-    console.log(res);
+    LoadingActionsCreator.setLoading(true);
+    await CustomerAPIService.addNewCustomer(form);
+    LoadingActionsCreator.setLoading(true);
+    history.push('/employee');
   };
 
   const handleClick = () => setShowPassword(!showPassword);
@@ -159,7 +162,7 @@ const CreateCustomer: React.FC = () => {
               </InputRightElement>
             </InputGroup>
           </Box>
-          <Button colorScheme='blue' type='submit' disabled={loading}>
+          <Button colorScheme='#120c4b' type='submit' disabled={loading}>
             {loading ? (
               <Spinner color='#120c4b' emptyColor='gray.200' />
             ) : (
