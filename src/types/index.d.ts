@@ -62,12 +62,8 @@ interface GetCustomerResponse extends Customer {
   totalPayment: number;
 }
 
-type AlertType = 'error' | 'warning' | 'success';
-
 type Alert = {
   id?: string;
-  title: string;
-  type: AlertType;
   message: string;
 };
 

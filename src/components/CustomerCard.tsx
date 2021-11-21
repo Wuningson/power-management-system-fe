@@ -11,6 +11,7 @@ export interface CustomerCardProps extends GetCustomerResponse {
 
 const CustomerCard: React.FC<CustomerCardProps> = (props) => {
   const {
+    _id,
     address,
     meterNo,
     lastName,
@@ -28,7 +29,14 @@ const CustomerCard: React.FC<CustomerCardProps> = (props) => {
       : `${firstName} ${lastName}`
   );
   return (
-    <Box maxW='sm' borderWidth='1px' borderRadius='lg' overflow='hidden' p='6'>
+    <Box
+      maxW='sm'
+      borderWidth='1px'
+      borderRadius='lg'
+      overflow='hidden'
+      p='6'
+      key={_id}
+    >
       <Box display='flex' alignItems='baseline'>
         <Icon as={FaUser} />
         <Text borderRadius='full' px='2'>

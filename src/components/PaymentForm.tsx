@@ -4,8 +4,9 @@ import { Redirect } from 'react-router';
 import { useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { RootState } from '../utils/store';
-import { VStack, Box, Input } from '@chakra-ui/react';
 import PaymentAPIService from '../api/PaymentAPIService';
+import DashLayout from '../layout/DashLayout';
+import { VStack, Box, Input, Button } from '@chakra-ui/react';
 
 const PaymentForm: React.FC = () => {
   const user = useSelector((state: RootState) => state.auth);
@@ -32,30 +33,37 @@ const PaymentForm: React.FC = () => {
 
   if (Utils.isCustomer(user)) {
     return (
-      <VStack spacing='24px'>
-        <form onSubmit={handleSubmit}>
-          <Box marginBottom='2em'>
-            <label htmlFor='email'>Email</label>
-            <Input
-              id='userId'
-              value={email}
-              {...register('email')}
-              onChange={handleChange}
-              placeholder='example@email.com'
-            />
-          </Box>
-          <Box marginBottom='2em'>
-            <label htmlFor='amount'>Amount</label>
-            <Input
-              id='userId'
-              value={amount}
-              {...register('amount')}
-              onChange={handleChange}
-              placeholder='10000'
-            />
-          </Box>
-        </form>
-      </VStack>
+      <DashLayout>
+        <VStack spacing='24px'>
+          <form onSubmit={handleSubmit}>
+            <Box marginBottom='2em'>
+              <label htmlFor='email'>Email</label>
+              <Input
+                id='userId'
+                value={email}
+                {...register('email')}
+                onChange={handleChange}
+                placeholder='example@email.com'
+                required={true}
+              />
+            </Box>
+            <Box marginBottom='2em'>
+              <label htmlFor='amount'>Amount</label>
+              <Input
+                id='userId'
+                value={amount}
+                {...register('amount')}
+                onChange={handleChange}
+                placeholder='10000'
+                required={true}
+              />
+            </Box>
+            <Button colorScheme='blue' type='submit'>
+              Make Payment
+            </Button>
+          </form>
+        </VStack>
+      </DashLayout>
     );
   } else return <Redirect to='/employee/customers' />;
 };
