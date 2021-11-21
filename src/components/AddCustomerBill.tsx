@@ -1,10 +1,15 @@
 import Utils from '../utils/Utils';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { useHistory } from 'react-router-dom';
 import BillAPIService from '../api/BillAPIService';
-import { VStack, Input, Box, Select, Button } from '@chakra-ui/react';
+import LoadingActionsCreator from '../actions/LoadingActionsCreator';
+import { VStack, Input, Box, Select, Button, Spinner } from '@chakra-ui/react';
+import { useSelector } from 'react-redux';
+import { RootState } from '../utils/store';
 
 const AddCustomerBill: React.FC<{ userId: string }> = ({ userId }) => {
+  const loading = useSelector((state: RootState) => state.loading);
   const [bill, setBill] = useState<CustomerBillPayload>({
     rate: 0,
     userId: userId,
@@ -13,11 +18,14 @@ const AddCustomerBill: React.FC<{ userId: string }> = ({ userId }) => {
   });
 
   const { rate, unitsUsed, billingMonth } = bill;
+  const history = useHistory();
 
   const handleSubmit = async (e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const res = await BillAPIService.addCustomerBill(bill);
-    console.log(res);
+    LoadingActionsCreator.setLoading(true);
+    await BillAPIService.addCustomerBill(bill);
+    LoadingActionsCreator.setLoading(false);
+    history.push(`/employee/tab/${userId}`);
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -73,8 +81,12 @@ const AddCustomerBill: React.FC<{ userId: string }> = ({ userId }) => {
             ))}
           </Select>
         </Box>
-        <Button colorScheme='blue' type='submit'>
-          Create New Customer
+        <Button colorScheme='blue' type='submit' disabled={loading}>
+          {loading ? (
+            'Create New Customer'
+          ) : (
+            <Spinner color='#120c4b' emptyColor='gray.200' />
+          )}
         </Button>
       </form>
     </VStack>

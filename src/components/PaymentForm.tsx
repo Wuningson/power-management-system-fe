@@ -6,10 +6,12 @@ import { useForm } from 'react-hook-form';
 import { RootState } from '../utils/store';
 import PaymentAPIService from '../api/PaymentAPIService';
 import DashLayout from '../layout/DashLayout';
-import { VStack, Box, Input, Button } from '@chakra-ui/react';
+import { VStack, Box, Input, Button, Center, Spinner } from '@chakra-ui/react';
 
 const PaymentForm: React.FC = () => {
-  const user = useSelector((state: RootState) => state.auth);
+  const state = useSelector((state: RootState) => state);
+  const user = state.auth;
+  const loading = state.loading;
   const [form, setForm] = useState<PaymentPayload>({
     email: user.email,
     amount: 0,
@@ -58,8 +60,14 @@ const PaymentForm: React.FC = () => {
                 required={true}
               />
             </Box>
-            <Button colorScheme='blue' type='submit'>
-              Make Payment
+            <Button colorScheme='blue' type='submit' disabled={loading}>
+              {loading ? (
+                <Center height='40vh'>
+                  <Spinner color='#120c4b' emptyColor='gray.200' size='md' />
+                </Center>
+              ) : (
+                'Make Payment'
+              )}
             </Button>
           </form>
         </VStack>

@@ -1,4 +1,3 @@
-import toast from 'react-hot-toast';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
@@ -9,15 +8,24 @@ import {
   Button,
   VStack,
   InputGroup,
-  InputRightElement
+  Center,
+  Spinner,
+  InputRightElement,
+  Alert,
+  AlertIcon
 } from '@chakra-ui/react';
+import { useSelector } from 'react-redux';
+import { RootState } from '../utils/store';
+import LoadingActionsCreator from '../actions/LoadingActionsCreator';
+import AlertsActionsCreator from '../actions/AlertActionsCreator';
 
 const Login: React.FC = () => {
+  const history = useHistory();
+  const [userId, setUserId] = useState('');
+  const [password, setPassword] = useState('');
   const { register } = useForm<LoginFormValues>();
   const [showPassword, setShowPassword] = useState(false);
-  const [userId, setUserId] = useState('42/3249/98');
-  const [password, setPassword] = useState('Password@123');
-  const history = useHistory();
+  const { loading, alert } = useSelector((state: RootState) => state);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
@@ -29,16 +37,19 @@ const Login: React.FC = () => {
     }
   };
 
+  const dismissAlert = (id: string) => (e: any) => {
+    AlertsActionsCreator.removeAlert(id);
+  };
+
   const handleSubmit = async (e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
-    toast.loading('Authenticating user');
+    LoadingActionsCreator.setLoading(true);
     const { type } = await AuthAPIService.login({ userId, password });
+    LoadingActionsCreator.setLoading(false);
     if (type === 'customer') {
       history.push('/customer');
-      toast.dismiss();
     } else {
       history.push('/employee');
-      toast.dismiss();
     }
   };
 
@@ -47,6 +58,12 @@ const Login: React.FC = () => {
   return (
     <section className='bg-purple_transparent h-100'>
       <div className='col-4 mx-auto padding_100-top'>
+        {alert.map(({ id, type, message }) => (
+          <Alert key={id} status={type} onClick={dismissAlert(id!)}>
+            <AlertIcon />
+            {message}
+          </Alert>
+        ))}
         <h1 className='font-lg mb-3 text-center text-primary font-weight-700'>
           Bill Management System
         </h1>
@@ -57,6 +74,7 @@ const Login: React.FC = () => {
               <Input
                 id='userId'
                 value={userId}
+                required={true}
                 {...register('userId')}
                 onChange={handleChange}
                 placeholder='Account No/ Employee Id'
@@ -67,11 +85,12 @@ const Login: React.FC = () => {
               <InputGroup size='md'>
                 <Input
                   pr='4.5rem'
+                  required={true}
+                  value={password}
                   {...register('password')}
+                  onChange={handleChange}
                   placeholder='Enter password'
                   type={showPassword ? 'text' : 'password'}
-                  value={password}
-                  onChange={handleChange}
                 />
                 <InputRightElement width='4.5rem'>
                   <Button h='1.75rem' size='sm' onClick={handleClick}>
@@ -80,8 +99,18 @@ const Login: React.FC = () => {
                 </InputRightElement>
               </InputGroup>
             </Box>
-            <Button className='bg-primary font-white w-100' type='submit'>
-              Login
+            <Button
+              className='bg-primary font-white w-100'
+              type='submit'
+              disabled={loading}
+            >
+              {loading ? (
+                <Center height='40vh'>
+                  <Spinner color='#120c4b' emptyColor='gray.200' size='md' />
+                </Center>
+              ) : (
+                'Login'
+              )}
             </Button>
           </form>
         </div>

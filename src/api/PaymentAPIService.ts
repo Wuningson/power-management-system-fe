@@ -1,17 +1,11 @@
 import axios from 'axios';
+import BaseAPIService from './BaseAPISerice';
 
-export default class PaymentAPIService {
-  private static baseUrl = 'https://final-project-power.herokuapp.com/api';
-  private static config = {
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem('token')}`
-    }
-  };
-
+export default class PaymentAPIService extends BaseAPIService {
   public static async generatePaymentUrl(
     payload: PaymentPayload
   ): Promise<DataResponse<string>> {
-    return new Promise(async (resolve, reject) => {
+    return new Promise(async (resolve) => {
       try {
         const { data } = await axios.post<DataResponse<string>>(
           `${this.baseUrl}/payment`,
@@ -21,8 +15,7 @@ export default class PaymentAPIService {
 
         resolve(data);
       } catch (err) {
-        console.log(err);
-        reject(err);
+        this.errorHandler(err);
       }
     });
   }
@@ -30,7 +23,7 @@ export default class PaymentAPIService {
   public static async fetchPayments(
     customerId: string
   ): Promise<DataResponse<Payment[]>> {
-    return new Promise(async (resolve, reject) => {
+    return new Promise(async (resolve) => {
       try {
         const { data } = await axios.get<DataResponse<Payment[]>>(
           `${this.baseUrl}/payment?customerId=${customerId}`,
@@ -39,8 +32,7 @@ export default class PaymentAPIService {
 
         resolve(data);
       } catch (err) {
-        console.log(err);
-        reject(err);
+        this.errorHandler(err);
       }
     });
   }

@@ -1,31 +1,27 @@
 import React from 'react';
 import Bill from './components/Bill';
 import Login from './components/Login';
-import ReduxStore from './utils/store';
-import { Toaster } from 'react-hot-toast';
 import Payment from './components/Payment';
 import Customer from './components/Customer';
 import HomePage from './components/HomePage';
+import DashLayout from './layout/DashLayout';
 import EmployeeTab from './components/EmployeeTab';
 import PaymentForm from './components/PaymentForm';
 import CreateCustomer from './components/CreateCustomer';
+import AuthActionsCreator from './actions/AuthActionsCreator';
 import CustomerDashboard from './components/CustomerDashboard';
 import EmployeeDashboard from './components/EmployeeDashboard';
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 import './cdn/b5/css/bootstrap.css';
 import './cdn/css/look_css/css/look_base_v2.css';
 import './cdn/css/style.css';
-import DashLayout from './layout/DashLayout';
 
 const App: React.FC = () => {
   console.log('app');
   const stringUser = localStorage.getItem('user');
   if (stringUser) {
     const user = JSON.parse(stringUser) as User;
-    ReduxStore.dispatch({
-      type: 'AUTHENTICATED',
-      user
-    });
+    AuthActionsCreator.authenticate(user);
   }
   return (
     <div className='App'>
@@ -50,13 +46,6 @@ const App: React.FC = () => {
           </DashLayout>
         </Switch>
       </BrowserRouter>
-      <Toaster
-        position='top-center'
-        reverseOrder={false}
-        toastOptions={{
-          duration: 5000
-        }}
-      />
     </div>
   );
 };

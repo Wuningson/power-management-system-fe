@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
 import AuthAPIService from '../api/AuthAPIService';
-import ReduxStore, { RootState } from '../utils/store';
+import { RootState } from '../utils/store';
 import { VStack, Input, Box, Button } from '@chakra-ui/react';
+import AuthActionsCreator from '../actions/AuthActionsCreator';
 
 interface EditCustomerProps {
   email: string;
@@ -37,10 +38,7 @@ const EditCustomer: React.FC<EditCustomerProps> = (props) => {
   const handleSubmit = async (e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
     const { data } = await AuthAPIService.updateCustomerById(_id, form);
-    ReduxStore.dispatch({
-      type: 'AUTHENTICATED',
-      user: data
-    });
+    AuthActionsCreator.authenticate(data);
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {

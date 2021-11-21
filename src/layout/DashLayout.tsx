@@ -3,8 +3,10 @@ import React, { useState } from 'react';
 import NavBar from '../components/NavBar';
 import { FiLogOut } from 'react-icons/fi';
 import { useSelector } from 'react-redux';
-import { Button, Icon } from '@chakra-ui/react';
-import ReduxStore, { RootState } from '../utils/store';
+import { RootState } from '../utils/store';
+import AuthActionsCreator from '../actions/AuthActionsCreator';
+import { Button, Icon, Alert, AlertIcon } from '@chakra-ui/react';
+import AlertsActionsCreator from '../actions/AlertActionsCreator';
 import { useHistory, useLocation, matchPath, Redirect } from 'react-router-dom';
 
 import './dashboard.css';
@@ -17,14 +19,17 @@ interface Props {
 
 // @ts-ignore
 const DashLayout: React.FC<Props> = (props) => {
-  const { firstName, lastName } = useSelector((state: RootState) => state.auth);
+  const state = useSelector((state: RootState) => state);
+  const { firstName, lastName } = state.auth;
   const fullName = Utils.capitalize(`${firstName} ${lastName}`);
+
+  const dismissAlert = (id: string) => (e: any) => {
+    AlertsActionsCreator.removeAlert(id);
+  };
 
   const token = localStorage.getItem('token');
   const logout = () => {
-    ReduxStore.dispatch({
-      type: 'UNAUTHENTICATED'
-    });
+    AuthActionsCreator.unAuthenticate();
   };
 
   const history = useHistory();
@@ -85,6 +90,12 @@ const DashLayout: React.FC<Props> = (props) => {
                 {active}
               </h1>
             </div>
+            {state.alert.map(({ id, message, type }) => (
+              <Alert key={id} status={type} onClick={dismissAlert(id!)}>
+                <AlertIcon />
+                {message}
+              </Alert>
+            ))}
             {props.children}
           </div>
         </div>

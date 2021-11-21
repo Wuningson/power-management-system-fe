@@ -1,12 +1,13 @@
 // Alerts
 export const SET_ALERT = 'SET_ALERT';
+export const SET_LOADING = 'SET_LOADING';
 export const REMOVE_ALERT = 'REMOVE_ALERT';
 export const AUTHENTICATED = 'AUTHENTICATED';
 export const UNAUTHENTICATED = 'UNAUTHENTICATED';
 
 type AuthenticatedAction = {
-  type: typeof AUTHENTICATED;
   user: User;
+  type: typeof AUTHENTICATED;
 };
 
 type UnauthenticatedAction = {
@@ -14,14 +15,19 @@ type UnauthenticatedAction = {
 };
 
 type SetAlertAction = {
-  type: typeof SET_ALERT;
   alert: Alert;
+  type: typeof SET_ALERT;
 };
 
 type RemoveAlertAction = {
-  type: typeof REMOVE_ALERT;
   id: string;
+  type: typeof REMOVE_ALERT;
 };
 
-export type AuthenticationActions = AuthenticatedAction | UnauthenticatedAction;
+export type LoadingAction = {
+  value: boolean;
+  type: typeof SET_LOADING;
+};
+
 export type AlertActions = SetAlertAction | RemoveAlertAction;
+export type AuthenticationActions = AuthenticatedAction | UnauthenticatedAction;

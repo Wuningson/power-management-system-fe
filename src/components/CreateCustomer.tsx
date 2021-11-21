@@ -7,11 +7,15 @@ import {
   Input,
   Button,
   VStack,
+  Spinner,
   InputGroup,
   InputRightElement
 } from '@chakra-ui/react';
+import { useSelector } from 'react-redux';
+import { RootState } from '../utils/store';
 
 const CreateCustomer: React.FC = () => {
+  const loading = useSelector((state: RootState) => state.loading);
   const { register } = useForm<AddCustomerPayload>();
   const [showPassword, setShowPassword] = useState(false);
   const [form, setForm] = useState<AddCustomerPayload>({
@@ -155,8 +159,12 @@ const CreateCustomer: React.FC = () => {
               </InputRightElement>
             </InputGroup>
           </Box>
-          <Button colorScheme='blue' type='submit'>
-            Create New Customer
+          <Button colorScheme='blue' type='submit' disabled={loading}>
+            {loading ? (
+              <Spinner color='#120c4b' emptyColor='gray.200' />
+            ) : (
+              'Create New Customer'
+            )}
           </Button>
         </form>
       </VStack>
