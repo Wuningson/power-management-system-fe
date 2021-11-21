@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
 import CustomerAPIService from '../api/CustomerAPIService';
@@ -60,6 +60,10 @@ const CreateCustomer: React.FC = () => {
   const goBack = () => {
     history.goBack();
   };
+
+  useEffect(() => {
+    LoadingActionsCreator.setLoading(false);
+  }, []);
 
   return (
     <>
@@ -162,7 +166,7 @@ const CreateCustomer: React.FC = () => {
               </InputRightElement>
             </InputGroup>
           </Box>
-          <Button colorScheme='#120c4b' type='submit' disabled={loading}>
+          <Button color='#120c4b' type='submit' disabled={loading}>
             {loading ? (
               <Spinner color='#120c4b' emptyColor='gray.200' />
             ) : (
