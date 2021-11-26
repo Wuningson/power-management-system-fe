@@ -39,7 +39,7 @@ const EmployeeDashboard: React.FC = () => {
     }
 
     getData();
-  });
+  }, []);
 
   return (
     <>
