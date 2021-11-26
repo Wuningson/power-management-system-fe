@@ -45,7 +45,6 @@ const App: React.FC = () => {
               path='/employee/customers/create'
             />
             <Route component={PaymentForm} path='/payments/customer' />
-            <Redirect to='/home' />
           </DashLayout>
         </Switch>
       </BrowserRouter>
