@@ -1,23 +1,23 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { useSelector } from 'react-redux';
+import { RootState } from '../utils/store';
 import { useHistory } from 'react-router-dom';
 import AuthAPIService from '../api/AuthAPIService';
+import AlertsActionsCreator from '../actions/AlertActionsCreator';
+import LoadingActionsCreator from '../actions/LoadingActionsCreator';
 import {
   Box,
   Input,
+  Alert,
   Button,
   VStack,
-  InputGroup,
   Center,
   Spinner,
-  InputRightElement,
-  Alert,
-  AlertIcon
+  AlertIcon,
+  InputGroup,
+  InputRightElement
 } from '@chakra-ui/react';
-import { useSelector } from 'react-redux';
-import { RootState } from '../utils/store';
-import LoadingActionsCreator from '../actions/LoadingActionsCreator';
-import AlertsActionsCreator from '../actions/AlertActionsCreator';
 
 const Login: React.FC = () => {
   const history = useHistory();

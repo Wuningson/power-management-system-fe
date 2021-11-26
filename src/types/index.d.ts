@@ -121,3 +121,13 @@ interface LoginFormValues {
   userId: string;
   password: string;
 }
+
+interface EmployeeDashboard {
+  bills: Record<string, number>;
+  payments: Record<string, number>;
+}
+
+interface DashboardData {
+  month: string;
+  value: number;
+}

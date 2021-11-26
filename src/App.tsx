@@ -29,18 +29,21 @@ const App: React.FC = () => {
         <Switch>
           <Route exact path='/signin' component={Login} />
           <DashLayout>
-            <Route path='/home' component={HomePage} />
             <Route exact path='/customer' component={CustomerDashboard} />
             <Route exact path='/employee' component={EmployeeDashboard} />
             <Route exact path='/employee/customers' component={Customer} />
             <Route exact path='/customer/bills/:userId' component={Bill} />
+            <Route path='/home' component={HomePage} />
             <Route
               exact
               path='/customer/payments/:userId'
               component={Payment}
             />
             <Route component={EmployeeTab} path='/employee/tab/:userId' />
-            <Route component={CreateCustomer} path='/customer/create' />
+            <Route
+              component={CreateCustomer}
+              path='/employee/customers/create'
+            />
             <Route component={PaymentForm} path='/payments/customer' />
             <Redirect to='/home' />
           </DashLayout>

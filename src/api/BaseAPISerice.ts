@@ -14,8 +14,11 @@ export default class BaseAPIService {
     let message = 'Could not complete your request try later';
     if (axios.isAxiosError(err)) {
       message =
-        err.response?.status !== 500 ? err.response?.data.message : message;
+        err.response?.status !== 500
+          ? err.response?.data.message || message
+          : message;
     }
+
     AlertsActionsCreator.setAlert({ type: 'error', message: message });
     LoadingActionsCreator.setLoading(false);
   }

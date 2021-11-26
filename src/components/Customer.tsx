@@ -40,7 +40,7 @@ const Customer: React.FC = () => {
   };
 
   const handleNewCustomer = () => {
-    history.push('/customer/create');
+    history.push('/employee/customers/create');
   };
 
   return (

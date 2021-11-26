@@ -44,7 +44,31 @@ const DashLayout: React.FC<Props> = (props) => {
     strict: false
   });
 
-  const [active, setActive] = useState<Active>('Dashboard');
+  const matchBills = matchPath(location.pathname, {
+    path: '/customer/bills/:userId',
+    exact: true,
+    strict: false
+  });
+  const matchPaymnets = matchPath(location.pathname, {
+    path: '/customer/payments/:userId',
+    exact: true,
+    strict: false
+  });
+  const matchCustomers = matchPath(location.pathname, {
+    path: '/employee/customers',
+    exact: true,
+    strict: false
+  });
+
+  const defaultActiveOption = matchBills
+    ? 'Bills'
+    : matchPaymnets
+    ? 'Payments'
+    : matchCustomers || matchUrl
+    ? 'Customers'
+    : 'Dashboard';
+
+  const [active, setActive] = useState<Active>(defaultActiveOption);
 
   const handleClick = (value: Active) => (e: any) => {
     console.log({ active, value });

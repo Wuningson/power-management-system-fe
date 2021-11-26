@@ -62,6 +62,22 @@ export default class AuthAPIService extends BaseAPIService {
     });
   }
 
+  public static async getEmployeeDashboardData(): Promise<
+    DataResponse<EmployeeDashboard>
+  > {
+    return new Promise(async (resolve) => {
+      try {
+        const { data } = await axios.get<DataResponse<EmployeeDashboard>>(
+          `${this.baseUrl}/employee/dashboard`,
+          this.config
+        );
+        resolve(data);
+      } catch (err) {
+        this.errorHandler(err);
+      }
+    });
+  }
+
   public static async updateCustomerById(
     id: string,
     payload: EditCustomerState
