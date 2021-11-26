@@ -9,7 +9,7 @@ const HomePage: React.FC = () => {
   return type === 'customer' ? (
     <Redirect to={`/customer`} />
   ) : (
-    <Redirect to='/employee' />
+    <Redirect to={`/employee`} />
   );
 };
 
