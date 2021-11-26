@@ -11,7 +11,7 @@ import CreateCustomer from './components/CreateCustomer';
 import AuthActionsCreator from './actions/AuthActionsCreator';
 import CustomerDashboard from './components/CustomerDashboard';
 import EmployeeDashboard from './components/EmployeeDashboard';
-import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import './cdn/b5/css/bootstrap.css';
 import './cdn/css/look_css/css/look_base_v2.css';
 import './cdn/css/style.css';
