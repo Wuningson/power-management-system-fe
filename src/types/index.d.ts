@@ -72,8 +72,8 @@ type Alert = {
 
 interface CustomerBillPayload {
   rate: number;
-  userId: string;
   unitsUsed: number;
+  customerId: string;
   billingMonth: number;
 }
 

@@ -12,9 +12,9 @@ const AddCustomerBill: React.FC<{ userId: string }> = ({ userId }) => {
   const loading = useSelector((state: RootState) => state.loading);
   const [bill, setBill] = useState<CustomerBillPayload>({
     rate: 0,
-    userId: userId,
     unitsUsed: 0,
-    billingMonth: 0
+    billingMonth: 0,
+    customerId: userId
   });
 
   const { rate, unitsUsed, billingMonth } = bill;
