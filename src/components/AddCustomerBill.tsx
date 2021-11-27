@@ -6,10 +6,14 @@ import BillAPIService from '../api/BillAPIService';
 import LoadingActionsCreator from '../actions/LoadingActionsCreator';
 import { VStack, Input, Box, Select, Button, Spinner } from '@chakra-ui/react';
 import { useSelector } from 'react-redux';
+import { RouteComponentProps } from 'react-router-dom';
 import { RootState } from '../utils/store';
 
-const AddCustomerBill: React.FC<{ userId: string }> = ({ userId }) => {
+type AddCustomerBillProps = RouteComponentProps<{ userId: string }>;
+
+const AddCustomerBill: React.FC<AddCustomerBillProps> = ({ match }) => {
   const loading = useSelector((state: RootState) => state.loading);
+  const { userId } = match.params;
   const [bill, setBill] = useState<CustomerBillPayload>({
     rate: 0,
     unitsUsed: 0,
@@ -23,6 +27,7 @@ const AddCustomerBill: React.FC<{ userId: string }> = ({ userId }) => {
   const handleSubmit = async (e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
     LoadingActionsCreator.setLoading(true);
+    console.log(bill);
     await BillAPIService.addCustomerBill(bill);
     LoadingActionsCreator.setLoading(false);
     history.push(`/employee/tab/${userId}`);
@@ -85,7 +90,7 @@ const AddCustomerBill: React.FC<{ userId: string }> = ({ userId }) => {
           {loading ? (
             <Spinner color='#120c4b' emptyColor='gray.200' />
           ) : (
-            'Create New Customer'
+            'Add Bill'
           )}
         </Button>
       </form>
