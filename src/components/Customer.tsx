@@ -71,7 +71,7 @@ const Customer: React.FC = () => {
                   No Record Found
                 </h4>
                 <p className='lead font-gray'>
-                  There are no bills at this moment. Check back again later
+                  There are no Customers at this moment. Check back again later
                 </p>
               </Td>
             </Tr>

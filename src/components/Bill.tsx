@@ -1,11 +1,11 @@
 import BillTable from './BillTable';
 import React, { useEffect, useState } from 'react';
 import BillAPIService from '../api/BillAPIService';
-import { RouteComponentProps } from 'react-router-dom';
+import { RouteComponentProps, useHistory } from 'react-router-dom';
 import LoadingActionsCreator from '../actions/LoadingActionsCreator';
 import { useSelector } from 'react-redux';
 import { RootState } from '../utils/store';
-import { Spinner, Center } from '@chakra-ui/react';
+import { Spinner, Center, Flex, Button } from '@chakra-ui/react';
 
 type BillProps = RouteComponentProps<{ userId: string }>;
 
@@ -24,8 +24,21 @@ const Bill: React.FC<BillProps> = ({ match }) => {
     getData();
   }, [match.params.userId]);
 
+  const history = useHistory();
+  const state = useSelector((state: RootState) => state);
+  const { type } = state.auth;
+
+  const handleNewCustomer = () => {
+    history.push(`/customer/bills/${match.params.userId}/create`);
+  };
+
   return (
     <>
+      <Flex justifyContent='space-between' marginBottom='2em'>
+        {type === 'employee' && (
+          <Button onClick={handleNewCustomer}>Add Customer Bill</Button>
+        )}
+      </Flex>
       {loading ? (
         <Center height='40vh'>
           <Spinner color='#120c4b' emptyColor='gray.200' size='xl' />

@@ -15,6 +15,7 @@ import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 import './cdn/b5/css/bootstrap.css';
 import './cdn/css/look_css/css/look_base_v2.css';
 import './cdn/css/style.css';
+import AddCustomerBill from './components/AddCustomerBill';
 
 const App: React.FC = () => {
   console.log('app');
@@ -45,6 +46,10 @@ const App: React.FC = () => {
               path='/employee/customers/create'
             />
             <Route component={PaymentForm} path='/payments/customer' />
+            <Route
+              component={AddCustomerBill}
+              path='/customer/bills/:userId/create'
+            />
             <Redirect to='/home' />
           </DashLayout>
         </Switch>
