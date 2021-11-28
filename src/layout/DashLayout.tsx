@@ -56,7 +56,10 @@ const DashLayout: React.FC<Props> = (props) => {
   });
   const matchCustomers = matchPath(location.pathname, {
     path: '/employee/customers',
-    exact: true,
+    strict: false
+  });
+  const matchEmployeeBills = matchPath(location.pathname, {
+    path: '/employee/bills',
     strict: false
   });
 
@@ -64,7 +67,7 @@ const DashLayout: React.FC<Props> = (props) => {
     ? 'Bills'
     : matchPaymnets
     ? 'Payments'
-    : matchCustomers || matchUrl
+    : matchCustomers || matchUrl || matchEmployeeBills
     ? 'Customers'
     : 'Dashboard';
 

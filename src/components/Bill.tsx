@@ -28,15 +28,15 @@ const Bill: React.FC<BillProps> = ({ match }) => {
   const state = useSelector((state: RootState) => state);
   const { type } = state.auth;
 
-  const handleNewCustomer = () => {
-    history.push(`/customer/bills/${match.params.userId}/create`);
+  const handleNewBill = () => {
+    history.push(`/employee/bills/${match.params.userId}/create`);
   };
 
   return (
     <>
       <Flex justifyContent='space-between' marginBottom='2em'>
         {type === 'employee' && (
-          <Button onClick={handleNewCustomer}>Add Customer Bill</Button>
+          <Button onClick={handleNewBill}>Add Customer Bill</Button>
         )}
       </Flex>
       {loading ? (

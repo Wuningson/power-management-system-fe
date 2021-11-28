@@ -46,6 +46,7 @@ const Login: React.FC = () => {
     LoadingActionsCreator.setLoading(true);
     const { type } = await AuthAPIService.login({ userId, password });
     LoadingActionsCreator.setLoading(false);
+    console.log(type);
     if (type === 'customer') {
       history.push('/customer');
     } else {

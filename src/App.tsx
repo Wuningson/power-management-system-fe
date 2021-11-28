@@ -48,10 +48,10 @@ const App: React.FC = () => {
             <Route component={PaymentForm} path='/payments/customer' />
             <Route
               component={AddCustomerBill}
-              path='/customer/bills/:userId/create'
+              path='/employee/bills/:userId/create'
             />
-            <Redirect to='/home' />
           </DashLayout>
+          <Redirect to='/home' />
         </Switch>
       </BrowserRouter>
     </div>

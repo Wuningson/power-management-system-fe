@@ -1,4 +1,7 @@
 import { Box } from '@chakra-ui/react';
+import { useSelector } from 'react-redux';
+import { RootState } from '../utils/store';
+import { Redirect } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
 import AuthAPIService from '../api/AuthAPIService';
 import {
@@ -15,6 +18,7 @@ import {
 const EmployeeDashboard: React.FC = () => {
   const [bills, setBills] = useState<DashboardData[]>([]);
   const [payments, setPayments] = useState<DashboardData[]>([]);
+  const { type } = useSelector((state: RootState) => state.auth);
 
   useEffect(() => {
     async function getData() {
@@ -41,7 +45,7 @@ const EmployeeDashboard: React.FC = () => {
     getData();
   }, []);
 
-  return (
+  return type === 'employee' ? (
     <>
       <Box>Employee Dashboard</Box>
       <h3>Bill History</h3>
@@ -102,6 +106,8 @@ const EmployeeDashboard: React.FC = () => {
         </LineChart>
       </ResponsiveContainer>
     </>
+  ) : (
+    <Redirect to='/customer' />
   );
 };
 

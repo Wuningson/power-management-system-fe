@@ -14,6 +14,7 @@ export interface NavBarProps {
 const NavBar: React.FC<NavBarProps> = (props) => {
   const { active, handleClick } = props;
   const { type, _id } = useSelector((state: RootState) => state.auth);
+  const dashboardLink = type === 'customer' ? '/customer' : '/employee';
 
   return (
     <div
@@ -22,7 +23,7 @@ const NavBar: React.FC<NavBarProps> = (props) => {
       role='tablist'
       aria-orientation='vertical'
     >
-      <Link as={RLink} to='/customer'>
+      <Link as={RLink} to={dashboardLink}>
         <button
           className={active === 'Dashboard' ? 'nav-link active' : 'nav-link'}
           id='v-pills-home-tab'

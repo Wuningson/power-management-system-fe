@@ -1,6 +1,7 @@
 import Utils from '../utils/Utils';
 import { useSelector } from 'react-redux';
 import { RootState } from '../utils/store';
+import { Redirect } from 'react-router-dom';
 import AuthAPIService from '../api/AuthAPIService';
 import React, { useEffect, useState } from 'react';
 import BillAPIService from '../api/BillAPIService';
@@ -20,7 +21,7 @@ const CustomerDashboard: React.FC = () => {
   const [bills, setBills] = useState<Bill[]>([]);
   const [totalPayment, setTotalPayment] = useState<number>(0);
   const [totalBill, setTotalBill] = useState<number>(0);
-  const { _id } = useSelector((state: RootState) => state.auth);
+  const { _id, type } = useSelector((state: RootState) => state.auth);
 
   useEffect(() => {
     async function getData() {
@@ -46,7 +47,7 @@ const CustomerDashboard: React.FC = () => {
   });
   console.log(data);
 
-  return (
+  return type === 'customer' ? (
     <>
       <h2>Welcome to your Power management System</h2>
       <div>
@@ -111,6 +112,8 @@ const CustomerDashboard: React.FC = () => {
         </LineChart>
       </ResponsiveContainer>
     </>
+  ) : (
+    <Redirect to='/employee' />
   );
 };
 
