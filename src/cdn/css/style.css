@@ -14,15 +14,11 @@
   color: #120c4b !important;
 }
 
-.main_body {
-  height: 80% !important;
-}
-
 .main_area {
-  height: 100%;
-  background: #fff;
-  overflow-x: hidden;
+  position: relative;
+  height: 48rem;
   overflow-y: auto;
+  background: #fff;
   border-top-right-radius: 10px;
   border-bottom-right-radius: 10px;
   border-bottom-left-radius: 10px;
@@ -46,6 +42,17 @@
 hr.fancy {
   border: none;
   border-top: 1px solid #f5f3fe !important;
+}
+
+.cursor-pointer {
+  cursor: pointer !important;
+}
+
+.shadow-hover {
+  transition: 0.5s;
+}
+.shadow-hover:hover {
+  box-shadow: 1px 3px 4px #c9c8c8;
 }
 
 /*# sourceMappingURL=style.css.map */

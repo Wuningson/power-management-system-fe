@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
 import CustomerAPIService from '../api/CustomerAPIService';
+import Dash_Layout from "../layout/dashboard";
 import {
   Box,
   Input,
@@ -55,9 +56,9 @@ const CreateCustomer: React.FC = () => {
   };
 
   return (
-    <>
-      <Button onClick={goBack}>Go Back</Button>
-      <VStack spacing='48px'>
+      <Dash_Layout title="Customers">
+
+      <VStack spacing='108px'>
         <form onSubmit={handleSubmit}>
           <Box marginBottom='2em'>
             <label htmlFor='email'>Email</label>
@@ -160,7 +161,7 @@ const CreateCustomer: React.FC = () => {
           </Button>
         </form>
       </VStack>
-    </>
+      </Dash_Layout>
   );
 };
 

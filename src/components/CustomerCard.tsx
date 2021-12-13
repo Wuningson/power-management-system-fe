@@ -28,36 +28,51 @@ const CustomerCard: React.FC<CustomerCardProps> = (props) => {
       : `${firstName} ${lastName}`
   );
   return (
-    <Box maxW='sm' borderWidth='1px' borderRadius='lg' overflow='hidden' p='6'>
-      <Box display='flex' alignItems='baseline'>
-        <Icon as={FaUser} />
-        <Text borderRadius='full' px='2'>
-          {fullName}
-        </Text>
-        <Box>
+    <div className="p-3 shadow-hover border rounded-3 mb-3 cursor-pointer">
+      <div className="border-bottom mb-2 pb-2">
+        <div className="float-end">
+          {cardType === 'employee' && (
+              <Box display='flex'>
+                <Box>
+                  Created By: {`${createdBy.firstName} ${createdBy.lastName}`}
+                </Box>
+              </Box>
+          )}
+        </div>
+        <h1 className="font-sm-3 fw-bold">{fullName}</h1>
+        <Box className="font-xs">
           <Icon as={GoLocation} /> {address}
         </Box>
-      </Box>
-      <Box display='flex' alignItems='baseline'>
-        <Box>Account Number: {accountNo}</Box>
-        <Box>Meter Number: {meterNo}</Box>
-      </Box>
-      <Box display='flex' alignItems='baseline'>
-        <Icon as={MdAccountBalanceWallet} />
-        <Box>Total Bill: {totalBill}</Box>
-        <Box>Total Paid: {totalPayment}</Box>
-        <Box borderRadius='full' color='teal'>
-          Balance: ₦{totalPayment - totalBill}
-        </Box>
-      </Box>
-      {cardType === 'employee' && (
-        <Box display='flex'>
-          <Box>
-            Created By: {`${createdBy.firstName} ${createdBy.lastName}`}
-          </Box>
-        </Box>
-      )}
-    </Box>
+      </div>
+
+      <div className="row">
+        <div className="col-lg-3 border-end text-center">
+          <p className="lead">{accountNo}</p>
+          <p className="mb-0 text-uppercase font-xs font-gray">Account Number</p>
+        </div>
+
+        <div className="col-lg-3 border-end text-center">
+          <p className="lead">{meterNo}</p>
+          <p className="mb-0 text-uppercase font-xs font-gray">Meter Number</p>
+        </div>
+        <div className="col-lg-2 border-end text-center">
+          <p className="lead">₦{totalBill}</p>
+          <p className="mb-0 text-uppercase font-xs font-gray">Total Bill</p>
+        </div>
+
+        <div className="col-lg-2 border-end text-center">
+          <p className="lead text-success">₦{totalPayment}</p>
+          <p className="mb-0 text-uppercase font-xs font-gray">Total Payment</p>
+        </div>
+
+        <div className="col-lg-2 text-center">
+          <p className="lead text-danger">₦{totalPayment - totalBill}</p>
+          <p className="mb-0 text-uppercase font-xs font-gray">Balance</p>
+        </div>
+
+      </div>
+
+    </div>
   );
 };
 

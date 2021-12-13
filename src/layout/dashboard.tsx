@@ -34,7 +34,7 @@ export default function Dash_Layout(props:Props)
     };
 
     return(
-        <section className="h-100 p-4 overflow-hidden bg-purple_transparent">
+        <section className="h-100 p-4 bg-purple_transparent">
 
             <div className="bg-primary clearfix border_radius mb-3 p-2">
 
@@ -56,8 +56,8 @@ export default function Dash_Layout(props:Props)
                     <NavBar active={props.title} />
 
                 </div>
-                <div className="col-lg-10">
-                    <div className="main_area">
+                <div className="col-lg-10 d-flex align-items-stretch">
+                    <div className="bg-white main_area w-100">
 
                         <div className="border_bottom pb-3 mb-3">
                             {
@@ -67,7 +67,10 @@ export default function Dash_Layout(props:Props)
                             }
                         <h1 className="font-lg-3 text-primary text-capitalize font-weight-700">{props.title}</h1>
                         </div>
+
+
                         {props.children}
+
                     </div>
                 </div>
             </div>

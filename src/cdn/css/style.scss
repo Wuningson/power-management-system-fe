@@ -17,17 +17,19 @@
   color: rgb(18,12,75) !Important;
 }
 
+
 .main_body
 {
-  height:80% !Important;
+  //height:80% !Important;
+
 }
 
 .main_area
 {
-  height: 100%;
-  background: #fff;
-  overflow-x: hidden;
+  position: relative;
+  height:48rem;
   overflow-y: auto;
+  background: #fff;
   border-top-right-radius: 10px;
   border-bottom-right-radius: 10px;
   border-bottom-left-radius: 10px;
@@ -55,4 +57,16 @@
 hr.fancy{
   border:none;
   border-top: 1px solid rgb(245,243,254) !Important;
+}
+
+.cursor-pointer{
+  cursor: pointer !Important;
+}
+
+.shadow-hover
+{
+  transition: .5s;
+  &:hover{
+    box-shadow: 1px 3px 4px #c9c8c8;
+  }
 }

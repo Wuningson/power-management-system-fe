@@ -5,6 +5,7 @@ import { useHistory } from 'react-router-dom';
 import { Box, Button, Flex } from '@chakra-ui/react';
 import CustomerAPIService from '../api/CustomerAPIService';
 import React, { Fragment, useEffect, useState } from 'react';
+import Dash_Layout from "../layout/dashboard";
 
 const Customer: React.FC = () => {
   const history = useHistory();
@@ -33,21 +34,24 @@ const Customer: React.FC = () => {
   const { type } = useSelector((state: RootState) => state.auth);
 
   return (
-    <Fragment>
-      <Flex justifyContent='space-between'>
-        <Button fill='grey' onClick={handleBack}>
-          Back
-        </Button>
+
+      <Dash_Layout title="Customers">
+
+      <Flex justifyContent='space-between' className="mb-4">
         {type === 'employee' && (
           <Button onClick={handleNewCustomer}>Add New Customer</Button>
         )}
       </Flex>
+
+
       {customers.map((customer, idx) => (
-        <Box onClick={handleClick(customer._id)}>
+        <div className="mb-2 w-100" onClick={handleClick(customer._id)}>
           <CustomerCard {...customer} cardType='employee' key={idx} />
-        </Box>
+        </div>
       ))}
-    </Fragment>
+
+
+      </Dash_Layout>
   );
 };
 
