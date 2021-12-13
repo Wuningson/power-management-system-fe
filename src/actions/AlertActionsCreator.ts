@@ -6,12 +6,14 @@ import ReduxStore from '../utils/store';
 class AlertsActionsCreator {
   static dispatch: Dispatch<types.AlertActions> = ReduxStore.dispatch;
 
-  static setAlert(title: string, message: string, type: AlertType) {
+  static setAlert(payload: Alert, number = 5000) {
     const id = uuid();
+    payload.id = id;
     this.dispatch({
       type: 'SET_ALERT',
-      alert: { id, message, type, title }
+      alert: payload
     });
+    setTimeout(() => this.removeAlert(id), number);
   }
 
   static removeAlert(id: string) {

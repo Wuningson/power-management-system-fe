@@ -66,15 +66,14 @@ type AlertType = 'error' | 'warning' | 'success';
 
 type Alert = {
   id?: string;
-  title: string;
   type: AlertType;
   message: string;
 };
 
 interface CustomerBillPayload {
   rate: number;
-  userId: string;
   unitsUsed: number;
+  customerId: string;
   billingMonth: number;
 }
 
@@ -121,4 +120,14 @@ interface AddCustomerPayload {
 interface LoginFormValues {
   userId: string;
   password: string;
+}
+
+interface EmployeeDashboard {
+  bills: Record<string, number>;
+  payments: Record<string, number>;
+}
+
+interface DashboardData {
+  month: string;
+  value: number;
 }

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
 import CustomerAPIService from '../api/CustomerAPIService';
@@ -8,11 +8,16 @@ import {
   Input,
   Button,
   VStack,
+  Spinner,
   InputGroup,
   InputRightElement
 } from '@chakra-ui/react';
+import { useSelector } from 'react-redux';
+import { RootState } from '../utils/store';
+import LoadingActionsCreator from '../actions/LoadingActionsCreator';
 
 const CreateCustomer: React.FC = () => {
+  const loading = useSelector((state: RootState) => state.loading);
   const { register } = useForm<AddCustomerPayload>();
   const [showPassword, setShowPassword] = useState(false);
   const [form, setForm] = useState<AddCustomerPayload>({
@@ -39,8 +44,10 @@ const CreateCustomer: React.FC = () => {
 
   const handleSubmit = async (e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const res = await CustomerAPIService.addNewCustomer(form);
-    console.log(res);
+    LoadingActionsCreator.setLoading(true);
+    await CustomerAPIService.addNewCustomer(form);
+    LoadingActionsCreator.setLoading(true);
+    history.push('/employee');
   };
 
   const handleClick = () => setShowPassword(!showPassword);
@@ -54,6 +61,10 @@ const CreateCustomer: React.FC = () => {
   const goBack = () => {
     history.goBack();
   };
+
+  useEffect(() => {
+    LoadingActionsCreator.setLoading(false);
+  }, []);
 
   return (
       <Dash_Layout title="Customers">
@@ -156,8 +167,12 @@ const CreateCustomer: React.FC = () => {
               </InputRightElement>
             </InputGroup>
           </Box>
-          <Button colorScheme='blue' type='submit'>
-            Create New Customer
+          <Button color='#120c4b' type='submit' disabled={loading}>
+            {loading ? (
+              <Spinner color='#120c4b' emptyColor='gray.200' />
+            ) : (
+              'Create New Customer'
+            )}
           </Button>
         </form>
       </VStack>

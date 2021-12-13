@@ -1,12 +1,13 @@
 import axios from 'axios';
-import ReduxStore from '../utils/store';
 import BaseAPIService from './BaseAPISerice';
+import AuthActionsCreator from '../actions/AuthActionsCreator';
+import { EditCustomerState } from '../components/EditCustomer';
 
 export default class AuthAPIService extends BaseAPIService {
   public static async login(
     loginPayload: UserLoginPayload
   ): Promise<{ type: UserType }> {
-    return new Promise(async (resolve, reject) => {
+    return new Promise(async (resolve) => {
       const url = `${this.baseUrl}/auth`;
       try {
         const { data } = await axios.post<DataResponse<UserLoginResponse>>(
@@ -15,8 +16,7 @@ export default class AuthAPIService extends BaseAPIService {
         );
         resolve(this.handleSuccessfulAuthentication(data));
       } catch (err) {
-        console.log(err);
-        reject(err);
+        this.errorHandler(err);
       }
     });
   }
@@ -27,16 +27,13 @@ export default class AuthAPIService extends BaseAPIService {
     const { token, ...user } = data;
     localStorage.setItem('token', token);
 
-    ReduxStore.dispatch({
-      user,
-      type: 'AUTHENTICATED'
-    });
+    AuthActionsCreator.authenticate(user);
 
     return { type: user.type };
   }
 
   public static async getEmployeeById(id: string) {
-    return new Promise(async (resolve, reject) => {
+    return new Promise(async (resolve) => {
       try {
         const { data } = await axios.get<DataResponse<Employee>>(
           `${this.baseUrl}/employee/${id}`,
@@ -44,8 +41,7 @@ export default class AuthAPIService extends BaseAPIService {
         );
         resolve(data);
       } catch (err) {
-        console.log(err);
-        reject(err);
+        this.errorHandler(err);
       }
     });
   }
@@ -53,7 +49,7 @@ export default class AuthAPIService extends BaseAPIService {
   public static async getCustomerById(
     id: string
   ): Promise<DataResponse<GetCustomerResponse>> {
-    return new Promise(async (resolve, reject) => {
+    return new Promise(async (resolve) => {
       try {
         const { data } = await axios.get<DataResponse<GetCustomerResponse>>(
           `${this.baseUrl}/customer/${id}`,
@@ -61,8 +57,41 @@ export default class AuthAPIService extends BaseAPIService {
         );
         resolve(data);
       } catch (err) {
-        console.log(err);
-        reject(err);
+        this.errorHandler(err);
+      }
+    });
+  }
+
+  public static async getEmployeeDashboardData(): Promise<
+    DataResponse<EmployeeDashboard>
+  > {
+    return new Promise(async (resolve) => {
+      try {
+        const { data } = await axios.get<DataResponse<EmployeeDashboard>>(
+          `${this.baseUrl}/employee/dashboard`,
+          this.config
+        );
+        resolve(data);
+      } catch (err) {
+        this.errorHandler(err);
+      }
+    });
+  }
+
+  public static async updateCustomerById(
+    id: string,
+    payload: EditCustomerState
+  ): Promise<DataResponse<UserLoginResponse>> {
+    return new Promise(async (resolve) => {
+      try {
+        const { data } = await axios.post<DataResponse<UserLoginResponse>>(
+          `${this.baseUrl}/customer/${id}`,
+          payload,
+          this.config
+        );
+        resolve(data);
+      } catch (err) {
+        this.errorHandler(err);
       }
     });
   }

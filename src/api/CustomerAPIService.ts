@@ -3,7 +3,7 @@ import BaseAPIService from './BaseAPISerice';
 
 export default class CustomerAPIService extends BaseAPIService {
   public static async addNewCustomer(payload: AddCustomerPayload) {
-    return new Promise(async (resolve, reject) => {
+    return new Promise(async (resolve) => {
       try {
         const { data } = await axios.post<NoDataResponse>(
           `${this.baseUrl}/employee/customer`,
@@ -13,8 +13,7 @@ export default class CustomerAPIService extends BaseAPIService {
 
         resolve(data);
       } catch (err) {
-        console.log(err);
-        reject(err);
+        this.errorHandler(err);
       }
     });
   }
@@ -22,7 +21,7 @@ export default class CustomerAPIService extends BaseAPIService {
   public static async fetchCustomers(): Promise<
     DataResponse<GetCustomerResponse[]>
   > {
-    return new Promise(async (resolve, reject) => {
+    return new Promise(async (resolve) => {
       try {
         const { data } = await axios.get<DataResponse<GetCustomerResponse[]>>(
           `${this.baseUrl}/customer`,
@@ -31,8 +30,7 @@ export default class CustomerAPIService extends BaseAPIService {
 
         resolve(data);
       } catch (err) {
-        console.log(err);
-        reject(err);
+        this.errorHandler(err);
       }
     });
   }

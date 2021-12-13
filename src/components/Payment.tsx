@@ -1,38 +1,38 @@
 import PaymentTable from './PaymentTable';
+import React, { useEffect, useState } from 'react';
+import { RouteComponentProps } from 'react-router-dom';
+import PaymentAPIService from '../api/PaymentAPIService';
+import { Center, Spinner } from '@chakra-ui/react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../utils/store';
-import { Text, Button } from '@chakra-ui/react';
-import React, { useEffect, useState } from 'react';
-import PaymentAPIService from '../api/PaymentAPIService';
-import { RouteComponentProps, useHistory } from 'react-router-dom';
-import Dash_Layout from "../layout/dashboard";
+import LoadingActionsCreator from '../actions/LoadingActionsCreator';
 
 type PaymentProps = RouteComponentProps<{ userId: string }>;
 
 const Payment: React.FC<PaymentProps> = ({ match }) => {
+  const loading = useSelector((state: RootState) => state.loading);
   const [payments, setPayments] = useState<Payment[]>([]);
   useEffect(() => {
     const userId = match.params.userId;
     async function getData() {
+      LoadingActionsCreator.setLoading(true);
       const data = await PaymentAPIService.fetchPayments(userId);
       setPayments(data.data);
+      LoadingActionsCreator.setLoading(false);
     }
     getData();
   }, [match.params.userId]);
 
-  const history = useHistory();
-  const handleBack = () => {
-    history.goBack();
-  };
-
-  const { type } = useSelector((state: RootState) => state.auth);
-
   return (
-      <Dash_Layout title="Payments">
-
-
-      <PaymentTable payments={payments} />
-    </Dash_Layout>
+    <>
+      {loading ? (
+        <Center height='40vh'>
+          <Spinner color='#120c4b' emptyColor='gray.200' size='xl' />
+        </Center>
+      ) : (
+        <PaymentTable payments={payments} />
+      )}
+    </>
   );
 };
 

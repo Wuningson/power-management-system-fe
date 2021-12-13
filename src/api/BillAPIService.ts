@@ -1,15 +1,9 @@
 import axios from 'axios';
+import BaseAPIService from './BaseAPISerice';
 
-export default class BillAPIService {
-  private static baseUrl = 'https://final-project-power.herokuapp.com/api';
-  private static config = {
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem('token')}`
-    }
-  };
-
+export default class BillAPIService extends BaseAPIService {
   public static addCustomerBill(customerBill: CustomerBillPayload) {
-    return new Promise(async (resolve, reject) => {
+    return new Promise(async (resolve) => {
       try {
         const { data } = await axios.post<NoDataResponse>(
           `${this.baseUrl}/bill`,
@@ -19,8 +13,7 @@ export default class BillAPIService {
 
         resolve(data);
       } catch (err) {
-        console.log(err);
-        reject(err);
+        this.errorHandler(err);
       }
     });
   }
@@ -28,7 +21,7 @@ export default class BillAPIService {
   public static async fetchBills(
     customerId: string
   ): Promise<DataResponse<Bill[]>> {
-    return new Promise(async (resolve, reject) => {
+    return new Promise(async (resolve) => {
       try {
         const { data } = await axios.get<DataResponse<Bill[]>>(
           `${this.baseUrl}/bill?customerId=${customerId}`,
@@ -37,14 +30,13 @@ export default class BillAPIService {
 
         resolve(data);
       } catch (err) {
-        console.log(err);
-        reject(err);
+        this.errorHandler(err);
       }
     });
   }
 
   public static async fetchBillById(billId: string) {
-    return new Promise(async (resolve, reject) => {
+    return new Promise(async (resolve) => {
       try {
         const { data } = await axios.get<DataResponse<Bill>>(
           `${this.baseUrl}/bill/${billId}`,
@@ -53,8 +45,7 @@ export default class BillAPIService {
 
         resolve(data);
       } catch (err) {
-        console.log(err);
-        reject(err);
+        this.errorHandler(err);
       }
     });
   }
