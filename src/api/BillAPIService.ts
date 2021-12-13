@@ -1,12 +1,11 @@
-import axios from 'axios';
 import BaseAPIService from './BaseAPISerice';
 
 export default class BillAPIService extends BaseAPIService {
   public static addCustomerBill(customerBill: CustomerBillPayload) {
     return new Promise(async (resolve) => {
       try {
-        const { data } = await axios.post<NoDataResponse>(
-          `${this.baseUrl}/bill`,
+        const { data } = await this.instance.post<NoDataResponse>(
+          `/bill`,
           customerBill,
           this.config
         );
@@ -23,8 +22,8 @@ export default class BillAPIService extends BaseAPIService {
   ): Promise<DataResponse<Bill[]>> {
     return new Promise(async (resolve) => {
       try {
-        const { data } = await axios.get<DataResponse<Bill[]>>(
-          `${this.baseUrl}/bill?customerId=${customerId}`,
+        const { data } = await this.instance.get<DataResponse<Bill[]>>(
+          `/bill?customerId=${customerId}`,
           this.config
         );
 
@@ -38,8 +37,8 @@ export default class BillAPIService extends BaseAPIService {
   public static async fetchBillById(billId: string) {
     return new Promise(async (resolve) => {
       try {
-        const { data } = await axios.get<DataResponse<Bill>>(
-          `${this.baseUrl}/bill/${billId}`,
+        const { data } = await this.instance.get<DataResponse<Bill>>(
+          `/bill/${billId}`,
           this.config
         );
 

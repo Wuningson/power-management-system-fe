@@ -8,6 +8,7 @@ import DashLayout from './layout/DashLayout';
 import EmployeeTab from './components/EmployeeTab';
 import PaymentForm from './components/PaymentForm';
 import CreateCustomer from './components/CreateCustomer';
+import AddCustomerBill from './components/AddCustomerBill';
 import AuthActionsCreator from './actions/AuthActionsCreator';
 import CustomerDashboard from './components/CustomerDashboard';
 import EmployeeDashboard from './components/EmployeeDashboard';
@@ -15,7 +16,6 @@ import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 import './cdn/b5/css/bootstrap.css';
 import './cdn/css/look_css/css/look_base_v2.css';
 import './cdn/css/style.css';
-import AddCustomerBill from './components/AddCustomerBill';
 
 const App: React.FC = () => {
   console.log('app');

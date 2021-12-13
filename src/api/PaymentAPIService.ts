@@ -1,4 +1,3 @@
-import axios from 'axios';
 import BaseAPIService from './BaseAPISerice';
 
 export default class PaymentAPIService extends BaseAPIService {
@@ -7,8 +6,8 @@ export default class PaymentAPIService extends BaseAPIService {
   ): Promise<DataResponse<string>> {
     return new Promise(async (resolve) => {
       try {
-        const { data } = await axios.post<DataResponse<string>>(
-          `${this.baseUrl}/payment`,
+        const { data } = await this.instance.post<DataResponse<string>>(
+          `/payment`,
           payload,
           this.config
         );
@@ -25,8 +24,8 @@ export default class PaymentAPIService extends BaseAPIService {
   ): Promise<DataResponse<Payment[]>> {
     return new Promise(async (resolve) => {
       try {
-        const { data } = await axios.get<DataResponse<Payment[]>>(
-          `${this.baseUrl}/payment?customerId=${customerId}`,
+        const { data } = await this.instance.get<DataResponse<Payment[]>>(
+          `/payment?customerId=${customerId}`,
           this.config
         );
 

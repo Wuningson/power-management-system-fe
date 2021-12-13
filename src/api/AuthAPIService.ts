@@ -1,4 +1,3 @@
-import axios from 'axios';
 import BaseAPIService from './BaseAPISerice';
 import AuthActionsCreator from '../actions/AuthActionsCreator';
 import { EditCustomerState } from '../components/EditCustomer';
@@ -8,12 +7,10 @@ export default class AuthAPIService extends BaseAPIService {
     loginPayload: UserLoginPayload
   ): Promise<{ type: UserType }> {
     return new Promise(async (resolve) => {
-      const url = `${this.baseUrl}/auth`;
       try {
-        const { data } = await axios.post<DataResponse<UserLoginResponse>>(
-          url,
-          loginPayload
-        );
+        const { data } = await this.instance.post<
+          DataResponse<UserLoginResponse>
+        >('/auth', loginPayload);
         resolve(this.handleSuccessfulAuthentication(data));
       } catch (err) {
         this.errorHandler(err);
@@ -26,6 +23,7 @@ export default class AuthAPIService extends BaseAPIService {
   }: DataResponse<UserLoginResponse>) {
     const { token, ...user } = data;
     localStorage.setItem('token', token);
+    this.useAuthInterceptor();
 
     AuthActionsCreator.authenticate(user);
 
@@ -35,8 +33,8 @@ export default class AuthAPIService extends BaseAPIService {
   public static async getEmployeeById(id: string) {
     return new Promise(async (resolve) => {
       try {
-        const { data } = await axios.get<DataResponse<Employee>>(
-          `${this.baseUrl}/employee/${id}`,
+        const { data } = await this.instance.get<DataResponse<Employee>>(
+          `/employee/${id}`,
           this.config
         );
         resolve(data);
@@ -51,10 +49,9 @@ export default class AuthAPIService extends BaseAPIService {
   ): Promise<DataResponse<GetCustomerResponse>> {
     return new Promise(async (resolve) => {
       try {
-        const { data } = await axios.get<DataResponse<GetCustomerResponse>>(
-          `${this.baseUrl}/customer/${id}`,
-          this.config
-        );
+        const { data } = await this.instance.get<
+          DataResponse<GetCustomerResponse>
+        >(`/customer/${id}`, this.config);
         resolve(data);
       } catch (err) {
         this.errorHandler(err);
@@ -67,10 +64,9 @@ export default class AuthAPIService extends BaseAPIService {
   > {
     return new Promise(async (resolve) => {
       try {
-        const { data } = await axios.get<DataResponse<EmployeeDashboard>>(
-          `${this.baseUrl}/employee/dashboard`,
-          this.config
-        );
+        const { data } = await this.instance.get<
+          DataResponse<EmployeeDashboard>
+        >(`/employee/dashboard`, this.config);
         resolve(data);
       } catch (err) {
         this.errorHandler(err);
@@ -84,11 +80,9 @@ export default class AuthAPIService extends BaseAPIService {
   ): Promise<DataResponse<UserLoginResponse>> {
     return new Promise(async (resolve) => {
       try {
-        const { data } = await axios.post<DataResponse<UserLoginResponse>>(
-          `${this.baseUrl}/customer/${id}`,
-          payload,
-          this.config
-        );
+        const { data } = await this.instance.post<
+          DataResponse<UserLoginResponse>
+        >(`/customer/${id}`, payload, this.config);
         resolve(data);
       } catch (err) {
         this.errorHandler(err);

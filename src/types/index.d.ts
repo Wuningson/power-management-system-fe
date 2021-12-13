@@ -111,7 +111,6 @@ interface AddCustomerPayload {
   address: string;
   meterNo: number;
   lastName: string;
-  password: string;
   firstName: string;
   accountNo: string;
   middleName: string;

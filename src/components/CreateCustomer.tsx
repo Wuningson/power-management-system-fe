@@ -1,29 +1,19 @@
-import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useHistory } from 'react-router-dom';
-import CustomerAPIService from '../api/CustomerAPIService';
-import {
-  Box,
-  Input,
-  Button,
-  VStack,
-  Spinner,
-  InputGroup,
-  InputRightElement
-} from '@chakra-ui/react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../utils/store';
+import { useHistory } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import CustomerAPIService from '../api/CustomerAPIService';
 import LoadingActionsCreator from '../actions/LoadingActionsCreator';
+import { Box, Input, Button, VStack, Spinner } from '@chakra-ui/react';
 
 const CreateCustomer: React.FC = () => {
   const loading = useSelector((state: RootState) => state.loading);
   const { register } = useForm<AddCustomerPayload>();
-  const [showPassword, setShowPassword] = useState(false);
   const [form, setForm] = useState<AddCustomerPayload>({
     email: '',
     meterNo: 0,
     address: '',
-    password: '',
     lastName: '',
     firstName: '',
     accountNo: '',
@@ -34,7 +24,6 @@ const CreateCustomer: React.FC = () => {
     email,
     meterNo,
     address,
-    password,
     lastName,
     firstName,
     accountNo,
@@ -48,8 +37,6 @@ const CreateCustomer: React.FC = () => {
     LoadingActionsCreator.setLoading(true);
     history.push('/employee');
   };
-
-  const handleClick = () => setShowPassword(!showPassword);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -146,25 +133,6 @@ const CreateCustomer: React.FC = () => {
               onChange={handleChange}
               placeholder='Ojoo, Ibadan'
             />
-          </Box>
-          <Box marginBottom='2em'>
-            <label htmlFor='password'>Password</label>
-            <InputGroup size='md'>
-              <Input
-                pr='4.5rem'
-                {...register('password')}
-                required={true}
-                placeholder='Password@123'
-                type={showPassword ? 'text' : 'password'}
-                value={password}
-                onChange={handleChange}
-              />
-              <InputRightElement width='4.5rem'>
-                <Button h='1.75rem' size='sm' onClick={handleClick}>
-                  {showPassword ? 'Hide' : 'Show'}
-                </Button>
-              </InputRightElement>
-            </InputGroup>
           </Box>
           <Button color='#120c4b' type='submit' disabled={loading}>
             {loading ? (

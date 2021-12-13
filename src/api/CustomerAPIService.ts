@@ -1,12 +1,11 @@
-import axios from 'axios';
 import BaseAPIService from './BaseAPISerice';
 
 export default class CustomerAPIService extends BaseAPIService {
   public static async addNewCustomer(payload: AddCustomerPayload) {
     return new Promise(async (resolve) => {
       try {
-        const { data } = await axios.post<NoDataResponse>(
-          `${this.baseUrl}/employee/customer`,
+        const { data } = await this.instance.post<NoDataResponse>(
+          `/employee/customer`,
           payload,
           this.config
         );
@@ -23,10 +22,9 @@ export default class CustomerAPIService extends BaseAPIService {
   > {
     return new Promise(async (resolve) => {
       try {
-        const { data } = await axios.get<DataResponse<GetCustomerResponse[]>>(
-          `${this.baseUrl}/customer`,
-          this.config
-        );
+        const { data } = await this.instance.get<
+          DataResponse<GetCustomerResponse[]>
+        >(`/customer`, this.config);
 
         resolve(data);
       } catch (err) {
