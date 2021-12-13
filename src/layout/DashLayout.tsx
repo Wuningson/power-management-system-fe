@@ -103,7 +103,7 @@ const DashLayout: React.FC<Props> = (props) => {
 
       <div className='row g-0 main_body'>
         <div className='col-lg-2'>
-          <NavBar active={active} handleClick={handleClick} />
+          <NavBar active={active} />
         </div>
         <div className='col-lg-10'>
           <div className='main_area scroll'>
