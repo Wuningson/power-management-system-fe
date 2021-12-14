@@ -66,7 +66,7 @@ const Login: React.FC = () => {
           </Alert>
         ))}
         <h1 className='font-lg mb-3 text-center text-primary font-weight-700'>
-          Bill Management System
+          Power Management System
         </h1>
         <div className='bg-white p-5 shadow border_radius'>
           <form onSubmit={handleSubmit}>
